@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package mall;
+
+option php_generic_services = true;
+option php_metadata_namespace = "App\\Grpc\\GPBMetadata";
+option php_namespace = "App\\Grpc\\Mall\\ProductSrv";
+
+
+service ProductSrv {
+  rpc create (ProductCreateRequest) returns (ProductId) {}
+  rpc getList (ProductListRequest) returns (ProductListReply){}
+  rpc getStock (ProductId) returns (ProductStockReply){}
+  rpc incStock (ProductStockRequest) returns (ProductStockReply){}
+  rpc decStock (ProductStockRequest) returns (ProductStockReply){}
+}
+
+message ProductCreateRequest {
+  string title = 1;
+  string icon = 2;
+  int32 stock = 3;
+}
+
+message Product {
+  int32 id = 1;
+  string title = 2;
+  string icon = 3;
+  int32 stock = 4;
+  string created_at = 5;
+  string updated_at = 6;
+}
+
+message ProductId {
+  int32 id = 1;
+}
+
+message ProductListRequest {
+  int32 page = 1;
+  int32 pageSize = 2;
+}
+
+message ProductListReply {
+  int32 total = 1;
+  repeated Product list = 2;
+}
+
+message ProductStockReply {
+  int32 stock = 1;
+}
+
+message ProductStockRequest {
+  int32 id = 1;
+  int32 stock = 2;
+}
